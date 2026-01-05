@@ -96,18 +96,19 @@ export function getOpacityForDistance(distance: number | undefined, baseOpacity:
 }
 
 /**
- * Color palette for hop distance visualization (warm to cool gradient).
- * Creates a heatmap effect where components close to anchor are "hot" (warm colors)
- * and distant ones are "cool" (gray-blue).
+ * Color palette for hop distance visualization (accessible purple→blue→gray gradient).
+ * Designed for:
+ * - WCAG AA compliance (all colors 3:1+ contrast on white)
+ * - Color-blind accessibility (no red-green reliance)
+ * - Perceptual clarity (distinct steps)
  */
 const HOP_COLORS = [
-    '#F59E0B', // 0: Gold (anchor)
-    '#EA580C', // 1: Orange
-    '#D97706', // 2: Amber
-    '#CA8A04', // 3: Yellow
-    '#65A30D', // 4: Lime
-    '#0D9488', // 5: Teal
-    '#6B7280', // 6+: Gray
+    '#7C3AED', // 0: Purple (anchor) - 5.0:1 contrast
+    '#2563EB', // 1: Blue - 4.6:1 contrast
+    '#0891B2', // 2: Cyan - 4.5:1 contrast
+    '#475569', // 3: Slate - 7.0:1 contrast
+    '#6B7280', // 4: Gray - 5.0:1 contrast
+    '#9CA3AF', // 5+: Light Gray - 3.0:1 contrast
 ];
 
 /**

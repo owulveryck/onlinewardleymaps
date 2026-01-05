@@ -29,7 +29,7 @@ const MapGraphics: React.FunctionComponent<MapGraphicsProps> = ({mapStyleDefs}) 
             <feDropShadow dx="0" dy="0" stdDeviation="3" floodColor="blue" />
         </filter>
         <filter id="anchorGlow">
-            <feDropShadow dx="0" dy="0" stdDeviation="4" floodColor="#F59E0B" floodOpacity="0.6" />
+            <feDropShadow dx="0" dy="0" stdDeviation="4" floodColor="#7C3AED" floodOpacity="0.6" />
         </filter>
         <linearGradient gradientUnits="objectBoundingBox" id="wardleyGradient" spreadMethod="pad" x1="0%" x2="100%" y1="0%" y2="0%">
             <stop offset="0%" style={{stopColor: 'rgb(196, 196, 196)', stopOpacity: 1}} />

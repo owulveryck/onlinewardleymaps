@@ -71,7 +71,7 @@ export const Plain: MapTheme = {
         textOffset: 8,
         evolvedTextColor: 'red',
         fontSize: '14px',
-        fontWeight: 'normal',
+        fontWeight: '500',
     },
     submap: {
         fontSize: '13px',
@@ -136,7 +136,7 @@ export const Handwritten = mergeIntoDefault({
         radius: 5,
         evolvedTextColor: 'red',
         textColor: 'black',
-        fontWeight: 'normal',
+        fontWeight: '500',
         fontSize: '12px',
     },
     annotation: {
@@ -208,7 +208,7 @@ export const Wardley = mergeIntoDefault({
         radius: 5,
         evolvedTextColor: 'red',
         textColor: 'black',
-        fontWeight: 'normal',
+        fontWeight: '500',
         fontSize: '12px',
     },
     annotation: {
@@ -332,7 +332,7 @@ export const Dark = mergeIntoDefault({
         textColor: 'rgba(255,255,255,.8)',
         textOffset: 8,
         evolvedTextColor: '#90caf9',
-        fontWeight: 'normal',
+        fontWeight: '500',
     },
     submap: {
         fontSize: '13px',
@@ -396,7 +396,7 @@ export const Colour = mergeIntoDefault({
         textColor: '#486b1a',
         textOffset: 8,
         evolvedTextColor: '#ea7f5b',
-        fontWeight: 'normal',
+        fontWeight: '500',
     },
     submap: {
         fill: '#8cb358',

@@ -44,7 +44,7 @@ const Anchor: React.FunctionComponent<ModernAnchorProps> = ({anchor, mapText, mu
         <>
             <Movable id={elementKey()} onMove={endDrag} x={x()} y={y()} fixedY={false} fixedX={false} isModKeyPressed={isModKeyPressed}>
                 <g onClick={onClick} style={{cursor: 'pointer'}}>
-                    <circle cx="0" cy="0" r="8" fill="#F59E0B" stroke="#D97706" strokeWidth="2" filter="url(#anchorGlow)" />
+                    <circle cx="0" cy="0" r="8" fill="#7C3AED" stroke="#5B21B6" strokeWidth="2" filter="url(#anchorGlow)" />
                     <ComponentTextSymbol
                         id={elementKey('text')}
                         text={anchor.name}
