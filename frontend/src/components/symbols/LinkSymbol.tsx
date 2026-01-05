@@ -23,6 +23,8 @@ interface ModernLinkSymbolProps {
     isMarkerStart?: boolean;
     styles?: Partial<LinkStyles>;
     filter?: string;
+    opacity?: number; // Opacity based on hop distance from anchor
+    hopDistanceColor?: string; // Color based on hop distance from anchor
 }
 
 const defaultStyles: LinkStyles = {
@@ -47,13 +49,16 @@ const LinkSymbol: React.FC<ModernLinkSymbolProps> = ({
     marker,
     styles = {},
     filter,
+    opacity = 1,
+    hopDistanceColor,
 }) => {
     const finalStyles = {...defaultStyles, ...styles};
-    const stroke = evolved ? finalStyles.evolvedStroke : finalStyles.stroke;
+    // Use hop distance color for stroke if provided and not evolved, otherwise use default styling
+    const stroke = evolved ? finalStyles.evolvedStroke : hopDistanceColor || finalStyles.stroke;
     const strokeWidth = evolved ? finalStyles.evolvedStrokeWidth : finalStyles.strokeWidth;
 
     return (
-        <g id={id}>
+        <g id={id} opacity={opacity}>
             <line
                 x1={x1}
                 y1={y1}

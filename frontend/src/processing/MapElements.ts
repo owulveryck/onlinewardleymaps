@@ -1,17 +1,21 @@
 import {EvolvedElementData, PipelineData, UnifiedComponent, UnifiedWardleyMap, createUnifiedComponent} from '../types/unified';
+import {calculateHopDistances} from '../utils/hopDistanceCalculator';
 
 export class MapElements {
     private allComponents: UnifiedComponent[];
     private evolvedElements: EvolvedElementData[];
     private pipelines: PipelineData[];
+    private links: {start: string; end: string}[];
 
     constructor(map: UnifiedWardleyMap) {
         this.allComponents = [...map.components, ...map.anchors, ...map.submaps, ...map.markets, ...map.ecosystems];
         this.evolvedElements = map.evolved;
         this.pipelines = map.pipelines;
+        this.links = map.links.map(l => ({start: l.start, end: l.end}));
 
         this.markEvolvingComponents();
         this.markPipelineComponents();
+        this.calculateAndAssignHopDistances();
     }
 
     private markEvolvingComponents(): void {
@@ -103,6 +107,18 @@ export class MapElements {
         });
     }
 
+    private calculateAndAssignHopDistances(): void {
+        const hopDistances = calculateHopDistances(this.links, this.allComponents);
+
+        this.allComponents = this.allComponents.map(component => {
+            const distance = hopDistances.get(component.name);
+            return {
+                ...component,
+                hopDistance: distance,
+            };
+        });
+    }
+
     getAllComponents(): UnifiedComponent[] {
         return this.allComponents;
     }
@@ -145,6 +161,8 @@ export class MapElements {
                 // Always preserve component decorators unless evolvedData has explicit decorators
                 decorators: component.decorators,
                 increaseLabelSpacing: increaseLabelSpacing,
+                // Evolved components inherit hop distance from their evolving counterpart
+                hopDistance: component.hopDistance,
             });
         });
     }

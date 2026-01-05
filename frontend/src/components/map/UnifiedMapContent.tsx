@@ -3,6 +3,7 @@ import {MapDimensions} from '../../constants/defaults';
 import {MapElements} from '../../processing/MapElements';
 import {MapTheme} from '../../types/map/styles';
 import {UnifiedComponent} from '../../types/unified';
+import {getColorForDistance, getOpacityForDistance} from '../../utils/hopDistanceCalculator';
 import {getMapElementsDecorated} from '../../utils/mapProcessing';
 import AcceleratorSymbol from '../symbols/AcceleratorSymbol';
 import ComponentSymbol from '../symbols/ComponentSymbol';
@@ -259,6 +260,8 @@ const UnifiedMapContent: React.FC<ModernUnifiedMapContentProps> = props => {
                                     id={`element_circle_${el.id}`}
                                     styles={mapStyleDefs.component}
                                     component={el}
+                                    opacity={getOpacityForDistance(el.hopDistance)}
+                                    hopDistanceColor={getColorForDistance(el.hopDistance)}
                                     onClick={(e: MouseEvent<SVGElement>) =>
                                         clicked({
                                             el: passComponent(el),
@@ -273,6 +276,8 @@ const UnifiedMapContent: React.FC<ModernUnifiedMapContentProps> = props => {
                                     id={`element_square_${el.id}`}
                                     styles={mapStyleDefs.component}
                                     component={el}
+                                    opacity={getOpacityForDistance(el.hopDistance)}
+                                    hopDistanceColor={getColorForDistance(el.hopDistance)}
                                     onClick={e =>
                                         clicked({
                                             el: passComponent(el),
@@ -287,6 +292,8 @@ const UnifiedMapContent: React.FC<ModernUnifiedMapContentProps> = props => {
                                     id={`ecosystem_circle_${el.id}`}
                                     styles={mapStyleDefs.component}
                                     component={el}
+                                    opacity={getOpacityForDistance(el.hopDistance)}
+                                    hopDistanceColor={getColorForDistance(el.hopDistance)}
                                     onClick={(e: MouseEvent<SVGGElement>) =>
                                         clicked({
                                             el: passComponent(el),
@@ -301,6 +308,8 @@ const UnifiedMapContent: React.FC<ModernUnifiedMapContentProps> = props => {
                                     id={`market_circle_${el.id}`}
                                     styles={mapStyleDefs.component}
                                     component={el}
+                                    opacity={getOpacityForDistance(el.hopDistance)}
+                                    hopDistanceColor={getColorForDistance(el.hopDistance)}
                                     onClick={(e: MouseEvent<SVGElement>) =>
                                         clicked({
                                             el: passComponent(el),
@@ -314,6 +323,8 @@ const UnifiedMapContent: React.FC<ModernUnifiedMapContentProps> = props => {
                                 <SubMapSymbol
                                     styles={mapStyleDefs.component}
                                     component={el}
+                                    opacity={getOpacityForDistance(el.hopDistance)}
+                                    hopDistanceColor={getColorForDistance(el.hopDistance)}
                                     onClick={(e: MouseEvent<SVGElement>) =>
                                         clicked({
                                             el: passComponent(el),

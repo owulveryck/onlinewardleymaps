@@ -3,6 +3,7 @@ import {MapDimensions} from '../../constants/defaults';
 import {MapTheme} from '../../constants/mapstyles';
 import {UnifiedComponent} from '../../types/unified/components';
 import {FlowLink} from '../../types/unified/links';
+import {getColorForDistance, getOpacityForDistance} from '../../utils/hopDistanceCalculator';
 import {useFeatureSwitches} from '../FeatureSwitchesContext';
 import LinkSymbol from '../symbols/LinkSymbol';
 import FlowText from './FlowText';
@@ -51,6 +52,13 @@ const ComponentLink: React.FC<ModernComponentLinkProps> = ({mapStyleDefs, mapDim
     const isUpsideDown = angle > 90 || angle < -90;
     const adjustedAngle = isUpsideDown ? angle + 180 : angle;
 
+    // Link opacity is the minimum of the two endpoint opacities (based on max hop distance)
+    const linkOpacity = Math.min(getOpacityForDistance(startElement.hopDistance), getOpacityForDistance(endElement.hopDistance));
+
+    // Link color is based on the max hop distance of the two endpoints (use the cooler/further color)
+    const maxHopDistance = Math.max(startElement.hopDistance ?? Infinity, endElement.hopDistance ?? Infinity);
+    const linkColor = isFinite(maxHopDistance) ? getColorForDistance(maxHopDistance) : undefined;
+
     return (
         <>
             <LinkSymbol
@@ -62,6 +70,8 @@ const ComponentLink: React.FC<ModernComponentLinkProps> = ({mapStyleDefs, mapDim
                 flow={isFlow}
                 evolved={isEvolved}
                 styles={mapStyleDefs.link}
+                opacity={linkOpacity}
+                hopDistanceColor={linkColor}
             />
             {link.flowValue && (
                 <FlowText
@@ -81,6 +91,7 @@ const ComponentLink: React.FC<ModernComponentLinkProps> = ({mapStyleDefs, mapDim
                     textAnchor="middle"
                     x={centerX}
                     y={centerY - buffer}
+                    opacity={linkOpacity}
                     transform={`rotate(${adjustedAngle} ${centerX} ${centerY})`}>
                     {link.context}
                 </text>

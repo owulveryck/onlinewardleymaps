@@ -10,6 +10,8 @@ interface ModernSubMapSymbolProps {
     styles: MapComponentTheme;
     launchUrl?: () => void;
     component?: UnifiedComponent; // Direct reference to UnifiedComponent
+    opacity?: number; // Opacity based on hop distance from anchor
+    hopDistanceColor?: string; // Color based on hop distance from anchor
 }
 
 const SubMapSymbol: React.FC<ModernSubMapSymbolProps> = ({
@@ -20,13 +22,16 @@ const SubMapSymbol: React.FC<ModernSubMapSymbolProps> = ({
     styles,
     launchUrl,
     component, // Direct access to UnifiedComponent
+    opacity = 1,
+    hopDistanceColor,
 }) => {
     const evolved = component?.evolved || false;
     const fill = evolved ? styles.evolvedFill : styles.fill;
-    const stroke = evolved ? styles.evolved : styles.stroke;
+    // Use hop distance color for stroke if provided and not evolved, otherwise use default styling
+    const stroke = evolved ? styles.evolved : hopDistanceColor || styles.stroke;
 
     return (
-        <>
+        <g opacity={opacity}>
             <rect
                 x="-20"
                 y="-6"
@@ -66,7 +71,7 @@ const SubMapSymbol: React.FC<ModernSubMapSymbolProps> = ({
                 fill={fill}
                 onClick={onClick}
             />
-        </>
+        </g>
     );
 };
 

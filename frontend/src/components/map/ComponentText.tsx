@@ -24,6 +24,8 @@ interface ModernComponentTextProps {
     scaleFactor?: number;
     mapStyleDefs?: any;
     onClick?: () => void;
+    opacity?: number; // Opacity based on hop distance from anchor
+    hopDistanceColor?: string; // Color based on hop distance from anchor
 }
 
 const ComponentText: React.FC<ModernComponentTextProps> = ({
@@ -39,6 +41,8 @@ const ComponentText: React.FC<ModernComponentTextProps> = ({
     onClick,
     id,
     element,
+    opacity = 1,
+    hopDistanceColor,
 }) => {
     const {enableDoubleClickRename} = useFeatureSwitches();
     const [editMode, setEditMode] = useState(false);
@@ -193,6 +197,9 @@ const ComponentText: React.FC<ModernComponentTextProps> = ({
                     evolvedTextColor: textFill,
                     textColor: textFill,
                 }}
+                opacity={opacity}
+                hopDistanceColor={hopDistanceColor}
+                evolved={component.evolved}
                 onClick={handleDoubleClick}
                 setShowTextField={enableDoubleClickRename && mapText ? setEditMode : undefined}
             />

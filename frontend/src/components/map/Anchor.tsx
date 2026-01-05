@@ -43,16 +43,18 @@ const Anchor: React.FunctionComponent<ModernAnchorProps> = ({anchor, mapText, mu
     return (
         <>
             <Movable id={elementKey()} onMove={endDrag} x={x()} y={y()} fixedY={false} fixedX={false} isModKeyPressed={isModKeyPressed}>
-                <ComponentTextSymbol
-                    id={elementKey('text')}
-                    text={anchor.name}
-                    x="0"
-                    y="-10"
-                    textAnchor="middle"
-                    evolved={anchor.evolved}
-                    textTheme={mapStyleDefs.component}
-                    onClick={onClick}
-                />
+                <g onClick={onClick} style={{cursor: 'pointer'}}>
+                    <circle cx="0" cy="0" r="8" fill="#F59E0B" stroke="#D97706" strokeWidth="2" filter="url(#anchorGlow)" />
+                    <ComponentTextSymbol
+                        id={elementKey('text')}
+                        text={anchor.name}
+                        x="0"
+                        y="-18"
+                        textAnchor="middle"
+                        evolved={anchor.evolved}
+                        textTheme={mapStyleDefs.component}
+                    />
+                </g>
             </Movable>
         </>
     );

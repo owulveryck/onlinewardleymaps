@@ -2,6 +2,7 @@ import React from 'react';
 import {MapDimensions} from '../../constants/defaults';
 import {MapTheme} from '../../types/map/styles';
 import {UnifiedComponent} from '../../types/unified';
+import {getColorForDistance, getOpacityForDistance} from '../../utils/hopDistanceCalculator';
 import {useModKeyPressedConsumer} from '../KeyPressContext';
 import ComponentText from './ComponentText';
 import Inertia from './Inertia';
@@ -148,6 +149,8 @@ const MapComponent: React.FC<ModernMapComponentProps> = ({
                     scaleFactor={scaleFactor}
                     mapText={mapText}
                     mutateMapText={mutateMapText}
+                    opacity={getOpacityForDistance(component.hopDistance)}
+                    hopDistanceColor={getColorForDistance(component.hopDistance)}
                     onClick={() => {
                         if (component.line) {
                             setHighlightLine(component.line);

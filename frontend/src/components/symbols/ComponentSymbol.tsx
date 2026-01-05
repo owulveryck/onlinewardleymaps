@@ -10,15 +10,37 @@ interface ModernComponentSymbolProps {
     styles: MapComponentTheme;
     component?: BaseMapElement & EvolvableElement & LabelableElement;
     evolved?: boolean; // Support for evolved prop used in icons.tsx
+    opacity?: number; // Opacity based on hop distance from anchor
+    hopDistanceColor?: string; // Color based on hop distance from anchor
 }
 
-const ComponentSymbol: React.FunctionComponent<ModernComponentSymbolProps> = ({id, cx, cy, component, onClick, styles}) => {
+const ComponentSymbol: React.FunctionComponent<ModernComponentSymbolProps> = ({
+    id,
+    cx,
+    cy,
+    component,
+    onClick,
+    styles,
+    opacity = 1,
+    hopDistanceColor,
+}) => {
     const evolved = component?.evolved || false;
     const fill = evolved ? styles.evolvedFill : styles.fill;
-    const stroke = evolved ? styles.evolved : styles.stroke;
+    // Use hop distance color for stroke if provided and not evolved, otherwise use default styling
+    const stroke = evolved ? styles.evolved : hopDistanceColor || styles.stroke;
 
     return (
-        <circle id={id} cx={cx} cy={cy} strokeWidth={styles.strokeWidth} r={styles.radius} stroke={stroke} fill={fill} onClick={onClick} />
+        <circle
+            id={id}
+            cx={cx}
+            cy={cy}
+            strokeWidth={styles.strokeWidth}
+            r={styles.radius}
+            stroke={stroke}
+            fill={fill}
+            onClick={onClick}
+            opacity={opacity}
+        />
     );
 };
 

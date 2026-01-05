@@ -11,6 +11,8 @@ interface ModernPipelineComponentSymbolProps {
     onClick?: (e: MouseEvent<SVGElement>) => void;
     styles: MapComponentTheme;
     component?: UnifiedComponent; // Direct reference to UnifiedComponent
+    opacity?: number; // Opacity based on hop distance from anchor
+    hopDistanceColor?: string; // Color based on hop distance from anchor
 }
 
 const PipelineComponentSymbol: React.FC<ModernPipelineComponentSymbolProps> = ({
@@ -22,10 +24,13 @@ const PipelineComponentSymbol: React.FC<ModernPipelineComponentSymbolProps> = ({
     onClick,
     styles,
     component, // Direct access to UnifiedComponent
+    opacity = 1,
+    hopDistanceColor,
 }) => {
     const evolved = component?.evolved || false;
     const fill = evolved ? styles.evolvedFill : styles.fill;
-    const stroke = evolved ? styles.evolved : styles.stroke;
+    // Use hop distance color for stroke if provided and not evolved, otherwise use default styling
+    const stroke = evolved ? styles.evolved : hopDistanceColor || styles.stroke;
 
     return (
         <rect
@@ -38,6 +43,7 @@ const PipelineComponentSymbol: React.FC<ModernPipelineComponentSymbolProps> = ({
             width={width}
             height={height}
             strokeWidth={styles.pipelineStrokeWidth}
+            opacity={opacity}
         />
     );
 };

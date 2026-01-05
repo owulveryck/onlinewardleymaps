@@ -15,6 +15,8 @@ export interface ComponentTextSymbolProps {
     note?: string;
     textAnchor?: string;
     setShowTextField?: (value: React.SetStateAction<boolean>) => void;
+    opacity?: number; // Opacity based on hop distance from anchor
+    hopDistanceColor?: string; // Color based on hop distance from anchor
 }
 
 const ComponentTextSymbol: React.FunctionComponent<ComponentTextSymbolProps> = ({
@@ -29,6 +31,8 @@ const ComponentTextSymbol: React.FunctionComponent<ComponentTextSymbolProps> = (
     textTheme,
     onClick,
     setShowTextField = null,
+    opacity = 1,
+    hopDistanceColor,
 }) => {
     const trimText = (id: string, longText: string) =>
         longText
@@ -40,7 +44,8 @@ const ComponentTextSymbol: React.FunctionComponent<ComponentTextSymbolProps> = (
                 </tspan>
             ));
 
-    const displayFill = evolved ? textTheme.evolvedTextColor : textTheme.textColor;
+    // Use hop distance color for text if provided and not evolved, otherwise use default styling
+    const displayFill = evolved ? textTheme.evolvedTextColor : hopDistanceColor || textTheme.textColor;
     const isLong = text && text.length > 14;
     const trimmedText = isLong ? trimText(id, text) : text;
     const transform = isLong ? 'translate(30, 10)' : '';
@@ -60,7 +65,8 @@ const ComponentTextSymbol: React.FunctionComponent<ComponentTextSymbolProps> = (
                 x={x}
                 y={y}
                 transform={transform}
-                fill={textTheme.textColor || displayFill}
+                fill={displayFill}
+                opacity={opacity}
                 onClick={onClick ? onClick : () => {}}
                 onDoubleClick={handleDblClick}>
                 {note || trimmedText}

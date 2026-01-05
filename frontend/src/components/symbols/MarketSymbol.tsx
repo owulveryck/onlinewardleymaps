@@ -28,6 +28,8 @@ interface ModernMarketSymbolProps {
     cy?: string;
     component?: UnifiedComponent; // Direct reference to UnifiedComponent
     onClick: (e: MouseEvent<SVGElement>) => void;
+    opacity?: number; // Opacity based on hop distance from anchor
+    hopDistanceColor?: string; // Color based on hop distance from anchor
 }
 
 const MarketSymbol: React.FC<ModernMarketSymbolProps> = ({
@@ -35,15 +37,17 @@ const MarketSymbol: React.FC<ModernMarketSymbolProps> = ({
     styles,
     onClick,
     component, // Direct access to UnifiedComponent
+    opacity = 1,
+    hopDistanceColor,
 }) => {
     const coords = rotatePoints();
 
-    // Could use component properties directly if needed
+    // Use hop distance color for stroke if provided and not evolved, otherwise use default styling
     const fill = component?.evolved ? styles.evolvedFill : styles.fill;
-    const stroke = component?.evolved ? styles.evolved : styles.stroke;
+    const stroke = component?.evolved ? styles.evolved : hopDistanceColor || styles.stroke;
 
     return (
-        <g id={id} onClick={onClick}>
+        <g id={id} onClick={onClick} opacity={opacity}>
             <circle r={SM_CIRC_RADIUS * 1.8} fill={fill} strokeWidth="1" stroke={stroke} />
             <path strokeWidth="2" stroke="black" fill="none" opacity=".8" d={`M${coords[0]} L${coords[1]} L${coords[2]} Z`} />
             {drawInsideCircles(coords, styles)}

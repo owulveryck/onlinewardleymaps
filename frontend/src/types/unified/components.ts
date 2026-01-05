@@ -56,6 +56,7 @@ export interface UrlElement {
 export interface UnifiedComponent extends BaseMapElement, LabelableElement, EvolvableElement, DecoratedElement, UrlElement {
     type: string;
     pipeline?: boolean;
+    hopDistance?: number; // Distance from nearest anchor for opacity calculation
 }
 
 /**
