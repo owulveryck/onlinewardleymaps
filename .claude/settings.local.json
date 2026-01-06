@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(yarn build)",
+      "Bash(npm run build)",
+      "Bash(npm install)",
+      "Bash(node src/index.js:*)",
+      "Bash(make:*)"
+    ]
+  }
+}

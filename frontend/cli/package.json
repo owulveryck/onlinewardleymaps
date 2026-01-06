@@ -1,0 +1,19 @@
+{
+  "name": "owm-cli",
+  "version": "1.0.0",
+  "description": "CLI tool to convert OWM text to SVG/PNG",
+  "type": "module",
+  "bin": {
+    "owm-cli": "./bin/owm-cli"
+  },
+  "scripts": {
+    "test": "node src/index.js ../src/constants/defaults.ts"
+  },
+  "keywords": ["wardley", "maps", "owm", "cli", "svg", "png"],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "playwright": "^1.40.0",
+    "commander": "^11.1.0"
+  }
+}

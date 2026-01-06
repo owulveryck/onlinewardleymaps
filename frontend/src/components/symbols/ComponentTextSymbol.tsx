@@ -44,8 +44,8 @@ const ComponentTextSymbol: React.FunctionComponent<ComponentTextSymbolProps> = (
                 </tspan>
             ));
 
-    // Use hop distance color for text if provided and not evolved, otherwise use default styling
-    const displayFill = evolved ? textTheme.evolvedTextColor : hopDistanceColor || textTheme.textColor;
+    // Always use standard text color to ensure readability
+    const displayFill = evolved ? textTheme.evolvedTextColor : textTheme.textColor;
     const isLong = text && text.length > 14;
     const trimmedText = isLong ? trimText(id, text) : text;
     const transform = isLong ? 'translate(30, 10)' : '';
@@ -66,7 +66,7 @@ const ComponentTextSymbol: React.FunctionComponent<ComponentTextSymbolProps> = (
                 y={y}
                 transform={transform}
                 fill={displayFill}
-                opacity={opacity}
+                opacity={1.0}
                 onClick={onClick ? onClick : () => {}}
                 onDoubleClick={handleDblClick}>
                 {note || trimmedText}

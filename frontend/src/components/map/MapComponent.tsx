@@ -150,7 +150,6 @@ const MapComponent: React.FC<ModernMapComponentProps> = ({
                     mapText={mapText}
                     mutateMapText={mutateMapText}
                     opacity={getOpacityForDistance(component.hopDistance)}
-                    hopDistanceColor={getColorForDistance(component.hopDistance)}
                     onClick={() => {
                         if (component.line) {
                             setHighlightLine(component.line);
