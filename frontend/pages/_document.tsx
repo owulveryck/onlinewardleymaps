@@ -7,10 +7,8 @@ class MyDocument extends Document {
     }
 
     render() {
-        const {locale} = this.props;
-
         return (
-            <Html lang={locale || 'en'}>
+            <Html lang="en">
                 <Head>
                     <meta charSet="utf-8" />
                     <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
@@ -42,7 +40,7 @@ class MyDocument extends Document {
                         content="Create and share Wardley Maps online. A visual tool for strategic planning and understanding the evolution of business and technology components."
                     />
                     <meta property="og:site_name" content="Online Wardley Maps" />
-                    <meta property="og:locale" content={locale || 'en'} />
+                    <meta property="og:locale" content="en" />
                     <meta property="og:image" content="https://onlinewardleymaps.com/android-chrome-512x512.png" />
                     <meta property="og:image:width" content="512" />
                     <meta property="og:image:height" content="512" />

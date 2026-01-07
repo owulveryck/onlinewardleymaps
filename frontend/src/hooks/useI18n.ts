@@ -1,9 +1,12 @@
-import {useRouter} from 'next/router';
 import {useCallback, useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 
+// Storage key for language preference
+const LANGUAGE_STORAGE_KEY = 'locale';
+const BASE_PATH = '/onlinewardleymaps';
+
 /**
- * Custom hook for internationalization
+ * Custom hook for internationalization (client-side only)
  * Provides translation function and current language state
  */
 export const useI18n = () => {
@@ -12,64 +15,40 @@ export const useI18n = () => {
         i18n,
         ready,
     } = useTranslation('common', {
-        // This ensures the component using this hook will re-render when the language changes
         bindI18n: 'languageChanged loaded',
     });
-    const router = useRouter();
     const [isHydrated, setIsHydrated] = useState(false);
     const [forceRender, setForceRender] = useState(0);
 
-    // Storage key for language preference
-    const LANGUAGE_STORAGE_KEY = 'onlinewardleymaps_language';
-
     /**
      * Get the saved language preference from localStorage
-     * Falls back to router locale or default 'en'
      */
     const getSavedLanguage = useCallback(() => {
         if (typeof window !== 'undefined') {
             const saved = localStorage.getItem(LANGUAGE_STORAGE_KEY);
             if (saved) {
-                // Check if it's a valid locale
                 const supportedLocales = ['en', 'es', 'fr', 'de', 'it', 'pt', 'ja', 'zh', 'ko', 'ru'];
                 if (supportedLocales.includes(saved)) {
                     return saved;
                 }
             }
         }
-        return router.locale || 'en';
-    }, [router.locale]);
+        return 'en';
+    }, []);
 
-    // Track hydration state to prevent SSR/CSR mismatches
+    // Track hydration state
     useEffect(() => {
         setIsHydrated(true);
-
-        // Once hydrated, check for saved language preference and apply it
-        const savedLanguage = getSavedLanguage();
-        const currentLang = i18n.language || router.locale || 'en';
-
-        if (savedLanguage !== currentLang && i18n && typeof i18n.changeLanguage === 'function') {
-            console.log(`Applying saved language preference: ${savedLanguage}`);
-            i18n.changeLanguage(savedLanguage)
-                .then(() => {
-                    // Update Next.js locale as well
-                    const {pathname, asPath, query} = router;
-                    router.push({pathname, query}, asPath, {locale: savedLanguage});
-                })
-                .catch(error => {
-                    console.error('Error applying saved language:', error);
-                });
-        }
-    }, [getSavedLanguage, i18n, router]);
+    }, []);
 
     // Set up listener for i18next language changes
     useEffect(() => {
+        if (typeof window === 'undefined') return;
+
         const handleLanguageChanged = () => {
-            // Force rerender by updating state
             setForceRender(prev => prev + 1);
         };
 
-        // Add event listener for both i18next and our custom event
         i18n.on('languageChanged', handleLanguageChanged);
         window.addEventListener('languageChanged', handleLanguageChanged);
 
@@ -79,17 +58,14 @@ export const useI18n = () => {
         };
     }, [i18n]);
 
-    // Simplified translation function with fallback
-    // Will cause re-render when language changes due to forceRender dependency
+    // Translation function with fallback
     const t = useCallback(
         (key: string, fallback?: string) => {
-            // During SSR or when not ready, always return fallback
             if (!isHydrated || !ready) {
                 return fallback || key;
             }
 
             const translation = originalT(key);
-            // If translation is the same as the key, it means no translation found
             return translation === key && fallback ? fallback : translation;
         },
         [isHydrated, ready, originalT, forceRender, i18n.language],
@@ -100,41 +76,45 @@ export const useI18n = () => {
             try {
                 console.log(`Changing language to: ${language}`);
 
-                // Change i18next language immediately for UI updates
+                // Change i18next language
                 if (i18n && typeof i18n.changeLanguage === 'function') {
-                    await i18n.changeLanguage(language);
-
-                    // Persist language preference to localStorage
-                    if (typeof window !== 'undefined') {
-                        localStorage.setItem(LANGUAGE_STORAGE_KEY, language);
-                        console.log(`Language preference saved to localStorage: ${language}`);
+                    // Load translations for the new language if not loaded
+                    if (!i18n.hasResourceBundle(language, 'common')) {
+                        try {
+                            const response = await fetch(`${BASE_PATH}/locales/${language}/common.json`);
+                            const translations = await response.json();
+                            i18n.addResourceBundle(language, 'common', translations, true, true);
+                        } catch (err) {
+                            console.warn(`Failed to load translations for ${language}:`, err);
+                        }
                     }
 
-                    // Force components to rerender by dispatching a custom event
-                    window.dispatchEvent(new CustomEvent('languageChanged', {detail: language}));
+                    await i18n.changeLanguage(language);
 
-                    // Also force this hook to update
+                    // Persist language preference
+                    if (typeof window !== 'undefined') {
+                        localStorage.setItem(LANGUAGE_STORAGE_KEY, language);
+                    }
+
+                    // Force components to rerender
+                    window.dispatchEvent(new CustomEvent('languageChanged', {detail: language}));
                     setForceRender(prev => prev + 1);
                 }
-
-                // Also change Next.js locale via router for SSR consistency
-                const {pathname, asPath, query} = router;
-                await router.push({pathname, query}, asPath, {locale: language});
 
                 console.log(`Language changed to: ${language}`);
             } catch (error) {
                 console.error('Error changing language:', error);
             }
         },
-        [i18n, router, LANGUAGE_STORAGE_KEY],
+        [i18n],
     );
 
-    const currentLanguage = i18n.language || router.locale || 'en';
+    const currentLanguage = i18n.language || getSavedLanguage();
     const isRTL = ['ar', 'he', 'fa'].includes(currentLanguage);
 
     return {
         t,
-        originalT, // Expose original for complex translations
+        originalT,
         changeLanguage,
         currentLanguage,
         isRTL,

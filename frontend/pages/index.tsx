@@ -1,11 +1,15 @@
-import {GetStaticProps} from 'next';
-import {serverSideTranslations} from 'next-i18next/serverSideTranslations';
+import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import {useRouter} from 'next/router';
 import React, {useEffect, useState} from 'react';
-import MapEnvironment from '../src/components/MapEnvironment';
 import {MapPersistenceStrategy} from '../src/constants/defaults';
 import {useI18n} from '../src/hooks/useI18n';
+
+// Dynamic import with SSR disabled - MapEnvironment uses window/document APIs
+const MapEnvironment = dynamic(() => import('../src/components/MapEnvironment'), {
+    ssr: false,
+    loading: () => <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh'}}>Loading...</div>,
+});
 
 interface MapProps {
     toggleTheme: () => void;
@@ -73,14 +77,6 @@ const Map: React.FC<MapProps> = props => {
             />
         </>
     );
-};
-
-export const getStaticProps: GetStaticProps = async ({locale}) => {
-    return {
-        props: {
-            ...(await serverSideTranslations(locale ?? 'en', ['common'])),
-        },
-    };
 };
 
 export default Map;

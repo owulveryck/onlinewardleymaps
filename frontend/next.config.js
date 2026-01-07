@@ -1,9 +1,13 @@
-const {i18n} = require('./next-i18next.config');
-
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+    output: 'export',
     reactStrictMode: true,
-    i18n,
+    basePath: '/onlinewardleymaps',
+    assetPrefix: '/onlinewardleymaps/',
+    trailingSlash: true,
+    images: {
+        unoptimized: true,
+    },
     webpack: (config, {isServer}) => {
         // Fixes npm packages that depend on `fs` module
         if (!isServer) {
