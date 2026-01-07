@@ -30,11 +30,26 @@ jobs:
           cache: 'npm'
           cache-dependency-path: frontend/package-lock.json
 
-      - name: Install dependencies
+      - name: Install frontend dependencies
         run: cd frontend && npm ci
 
       - name: Build static site
         run: cd frontend && npm run build
+
+      - name: Install owm-lib dependencies
+        run: cd frontend/owm-lib && npm ci
+
+      - name: Build owm-lib
+        run: cd frontend/owm-lib && npm run build
+
+      - name: Copy owm-lib to output
+        run: |
+          mkdir -p frontend/out/owm
+          cp frontend/owm-lib/dist/owm.esm.mjs frontend/out/owm/
+          cp frontend/owm-lib/dist/owm.esm.min.mjs frontend/out/owm/
+          cp frontend/owm-lib/dist/owm.umd.js frontend/out/owm/
+          cp frontend/owm-lib/dist/owm.umd.min.js frontend/out/owm/
+          cp frontend/owm-lib/examples/index.html frontend/out/owm/
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

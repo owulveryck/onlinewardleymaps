@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OWM - Embeddable Wardley Maps Library</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html, body {
+            height: 100%;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f5f5;
+        }
+        .page-container {
+            min-height: 100%;
+            padding: 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            color: #666;
+            margin-bottom: 20px;
+            font-size: 1.1em;
+        }
+        h2 {
+            color: #444;
+            border-bottom: 2px solid #1976d2;
+            padding-bottom: 10px;
+            margin: 30px 0 15px 0;
+        }
+        p {
+            color: #666;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+        a {
+            color: #1976d2;
+        }
+        .owm-container {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            max-height: 70vh;
+        }
+        pre.owm {
+            display: none;
+        }
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 4px;
+            overflow-x: auto;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 13px;
+            margin: 10px 0;
+        }
+        .code-block code {
+            color: #f8f8f2;
+        }
+        .examples-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .example-card {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .example-card h3 {
+            margin-bottom: 10px;
+            color: #333;
+        }
+        .example-card .owm-container {
+            max-height: 350px;
+        }
+        .badge {
+            display: inline-block;
+            background: #1976d2;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            margin-right: 8px;
+        }
+        .downloads {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .downloads h3 {
+            margin-bottom: 15px;
+            color: #333;
+        }
+        .download-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+        }
+        .download-link {
+            display: block;
+            padding: 10px 15px;
+            background: #f5f5f5;
+            border-radius: 4px;
+            text-decoration: none;
+            color: #333;
+        }
+        .download-link:hover {
+            background: #e3f2fd;
+        }
+        .download-link small {
+            color: #666;
+            display: block;
+        }
+        .back-link {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="page-container">
+        <p class="back-link"><a href="../">&larr; Back to Online Wardley Maps</a></p>
+
+        <h1>OWM - Embeddable Wardley Maps</h1>
+        <p class="subtitle">
+            A JavaScript library for rendering Wardley Maps, similar to how
+            <a href="https://mermaid.js.org/">Mermaid.js</a> renders diagrams.
+        </p>
+
+        <div class="downloads">
+            <h3>Download</h3>
+            <div class="download-grid">
+                <a href="./owm.esm.min.mjs" class="download-link" download>
+                    <strong>owm.esm.min.mjs</strong>
+                    <small>ESM Module (minified)</small>
+                </a>
+                <a href="./owm.esm.mjs" class="download-link" download>
+                    <strong>owm.esm.mjs</strong>
+                    <small>ESM Module</small>
+                </a>
+                <a href="./owm.umd.min.js" class="download-link" download>
+                    <strong>owm.umd.min.js</strong>
+                    <small>UMD (minified)</small>
+                </a>
+                <a href="./owm.umd.js" class="download-link" download>
+                    <strong>owm.umd.js</strong>
+                    <small>UMD</small>
+                </a>
+            </div>
+        </div>
+
+        <h2>Live Example: Tea Shop Map</h2>
+        <pre class="owm">
+title Tea Shop
+anchor Business [0.95, 0.63]
+anchor Public [0.95, 0.78]
+component Cup of Tea [0.79, 0.61] label [-85, 4]
+component Cup [0.73, 0.78]
+component Tea [0.63, 0.81]
+component Hot Water [0.52, 0.80]
+component Water [0.38, 0.82]
+component Kettle [0.43, 0.35] label [-57, 4]
+evolve Kettle->Electric Kettle 0.62 label [16, 5]
+component Power [0.1, 0.7] label [-27, 20]
+evolve Power 0.89 label [-12, 21]
+Business->Cup of Tea
+Public->Cup of Tea
+Cup of Tea->Cup
+Cup of Tea->Tea
+Cup of Tea->Hot Water
+Hot Water->Water
+Hot Water->Kettle
+Kettle->Power
+
+annotation 1 [0.74, 0.56] Customer facing
+annotation 2 [0.38, 0.30] Key evolution
+
+style wardley
+        </pre>
+
+        <h2>More Examples</h2>
+        <div class="examples-grid">
+            <div class="example-card">
+                <h3><span class="badge">Plain</span> Simple Value Chain</h3>
+                <pre class="owm">
+title Simple Value Chain
+anchor Customer [0.95, 0.5]
+component Product [0.75, 0.4]
+component Service [0.55, 0.6]
+component Platform [0.35, 0.7]
+component Infrastructure [0.15, 0.85]
+Customer->Product
+Product->Service
+Service->Platform
+Platform->Infrastructure
+
+style plain
+                </pre>
+            </div>
+
+            <div class="example-card">
+                <h3><span class="badge">Colour</span> With Annotations</h3>
+                <pre class="owm">
+title Annotated Map
+anchor User [0.95, 0.5]
+component Application [0.7, 0.4]
+component Database [0.4, 0.6]
+component Cloud [0.2, 0.8]
+User->Application
+Application->Database
+Database->Cloud
+
+annotation 1 [0.65, 0.35] Main application
+annotation 2 [0.35, 0.55] Data layer
+
+style colour
+                </pre>
+            </div>
+
+            <div class="example-card">
+                <h3><span class="badge">Dark</span> Dark Theme</h3>
+                <pre class="owm">
+title Dark Theme Example
+anchor Business [0.9, 0.5]
+component Frontend [0.7, 0.3]
+component API [0.5, 0.5]
+component Database [0.3, 0.7]
+evolve Database 0.85
+Business->Frontend
+Frontend->API
+API->Database
+
+style dark
+                </pre>
+            </div>
+
+            <div class="example-card">
+                <h3><span class="badge">Wardley</span> Evolution</h3>
+                <pre class="owm">
+title Evolution Example
+component Legacy System [0.6, 0.25] label [-100, 0]
+evolve Legacy System->Modern Platform 0.75
+component Data [0.4, 0.5]
+component Cloud Services [0.2, 0.85]
+Legacy System->Data
+Data->Cloud Services
+
+style wardley
+                </pre>
+            </div>
+        </div>
+
+        <h2>Quick Start</h2>
+        <p>Add OWM to your page with just a few lines of code:</p>
+        <div class="code-block">
+<pre><code>&lt;!-- Include the OWM library --&gt;
+&lt;script type="module"&gt;
+  import owm from 'https://owulveryck.github.io/onlinewardleymaps/owm/owm.esm.min.mjs';
+  owm.initialize({ startOnLoad: true });
+&lt;/script&gt;
+
+&lt;!-- Define your Wardley Map --&gt;
+&lt;pre class="owm"&gt;
+title My Map
+component Foo [0.5, 0.5]
+component Bar [0.3, 0.7]
+Foo-&gt;Bar
+&lt;/pre&gt;</code></pre>
+        </div>
+
+        <h2>Configuration Options</h2>
+        <div class="code-block">
+<pre><code>owm.initialize({
+  startOnLoad: true,        // Auto-render on page load
+  selector: 'pre.owm',      // CSS selector for map elements
+  theme: 'wardley',         // Theme: wardley, plain, colour, dark, handwritten
+  width: 1280,              // ViewBox width (16:9 default)
+  height: 720               // ViewBox height
+});</code></pre>
+        </div>
+
+        <h2>Programmatic API</h2>
+        <div class="code-block">
+<pre><code>// Render to a specific element
+owm.render(document.getElementById('my-map'), mapText, { width: 1280 });
+
+// Get SVG string directly (for server-side rendering)
+const svgString = owm.renderToString(mapText, { theme: 'colour' });
+
+// Parse map text to object
+const mapObject = owm.parse(mapText);</code></pre>
+        </div>
+
+        <h2>Map Syntax</h2>
+        <p>OWM uses the same syntax as <a href="../">Online Wardley Maps</a>:</p>
+        <div class="code-block">
+<pre><code>title My Strategic Map
+
+# Components: name [visibility, evolution]
+component User Need [0.9, 0.5]
+component Platform [0.5, 0.6]
+
+# Anchors (highlighted as entry points)
+anchor Customer [0.95, 0.5]
+
+# Links
+Customer->User Need
+User Need->Platform
+
+# Evolution arrows
+evolve Platform 0.85
+
+# Annotations
+annotation 1 [0.4, 0.5] Important note here
+
+# Styles: wardley, plain, colour, dark, handwritten
+style wardley</code></pre>
+        </div>
+
+        <h2>Features</h2>
+        <ul style="color: #666; line-height: 2; margin-left: 20px;">
+            <li><strong>Hop Distance Visualization</strong> - Components are colored based on distance from anchors</li>
+            <li><strong>Multiple Themes</strong> - wardley, plain, colour, dark, handwritten</li>
+            <li><strong>Annotations</strong> - Add numbered annotations with text box legend</li>
+            <li><strong>Evolution Arrows</strong> - Show component evolution paths</li>
+            <li><strong>Responsive SVG</strong> - 16:9 aspect ratio, scales to container</li>
+            <li><strong>Zero Dependencies</strong> - Self-contained bundle</li>
+        </ul>
+
+        <p style="margin-top: 40px; text-align: center; color: #999;">
+            Part of <a href="../">Online Wardley Maps</a> |
+            <a href="https://github.com/damonsk/onlinewardleymaps">GitHub</a>
+        </p>
+    </div>
+
+    <!-- Include the OWM library -->
+    <script type="module">
+        import owm from './owm.esm.min.mjs';
+        owm.initialize({ startOnLoad: true });
+    </script>
+</body>
+</html>
+</code></pre></parameter>
+</invoke>
