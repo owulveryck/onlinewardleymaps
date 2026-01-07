@@ -1,14 +1,7 @@
-import {makeStyles} from '@mui/styles';
 import React from 'react';
 import {UncontrolledReactSVGPanZoom} from 'react-svg-pan-zoom';
 import {MapCanvasDimensions, MapDimensions} from '../../constants/defaults';
 import {MapTheme} from '../../types/map/styles';
-
-const useStyles = makeStyles(() => ({
-    mapCanvas: {
-        userSelect: 'none',
-    },
-}));
 
 interface MapSVGContainerProps {
     viewerRef: React.RefObject<any>;
@@ -35,8 +28,6 @@ export const MapSVGContainer: React.FC<MapSVGContainerProps> = ({
     onZoom,
     children,
 }) => {
-    const styles = useStyles();
-
     return (
         <UncontrolledReactSVGPanZoom
             ref={viewerRef}
@@ -60,7 +51,8 @@ export const MapSVGContainer: React.FC<MapSVGContainerProps> = ({
                 fontFamily: mapStyleDefs.fontFamily,
             }}>
             <svg
-                className={[mapStyleDefs.className, styles.mapCanvas].join(' ')}
+                className={mapStyleDefs.className}
+                style={{userSelect: 'none'}}
                 width={mapDimensions.width + 2}
                 height={mapDimensions.height + 4}
                 id="svgMap"

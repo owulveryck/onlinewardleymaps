@@ -1,6 +1,5 @@
 import CssBaseline from '@mui/material/CssBaseline';
-import {ThemeProvider as MaterialUIThemeProvider} from '@mui/material/styles';
-import StylesProvider from '@mui/styles/StylesProvider';
+import {StyledEngineProvider, ThemeProvider as MaterialUIThemeProvider} from '@mui/material/styles';
 import {appWithTranslation} from 'next-i18next';
 import {AppProps} from 'next/app';
 import Head from 'next/head';
@@ -14,13 +13,6 @@ import {featureSwitches} from '../src/constants/featureswitches';
 import {lightTheme, theme} from '../src/theme';
 
 const MyApp: React.FC<AppProps> = ({Component, pageProps}) => {
-    useEffect(() => {
-        const jssStyles = document.querySelector<HTMLStyleElement>('#jss-server-side');
-        if (jssStyles && jssStyles.parentNode) {
-            jssStyles.parentNode.removeChild(jssStyles);
-        }
-    }, []);
-
     const [currentTheme, setCurrentTheme] = useState(theme);
     const [isLightTheme, setIsLightTheme] = useState<boolean>(false);
     const [menuVisible, setMenuVisible] = useState<boolean>(false);
@@ -45,7 +37,7 @@ const MyApp: React.FC<AppProps> = ({Component, pageProps}) => {
             </Head>
             <FeatureSwitchesProvider value={featureSwitches}>
                 <ModKeyPressedProvider>
-                    <StylesProvider injectFirst>
+                    <StyledEngineProvider injectFirst>
                         <MaterialUIThemeProvider theme={currentTheme}>
                             <StyledComponentsThemeProvider theme={currentTheme}>
                                 <CssBaseline />
@@ -60,7 +52,7 @@ const MyApp: React.FC<AppProps> = ({Component, pageProps}) => {
                                 <Footer />
                             </StyledComponentsThemeProvider>
                         </MaterialUIThemeProvider>
-                    </StylesProvider>
+                    </StyledEngineProvider>
                 </ModKeyPressedProvider>
             </FeatureSwitchesProvider>
         </>

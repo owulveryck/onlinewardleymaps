@@ -7,7 +7,7 @@ interface ModernAnnotationBoxSymbolProps {
     dy?: string | number;
     theme: MapAnnotationTheme;
     fill?: string;
-    textAnchor?: string;
+    textAnchor?: 'start' | 'middle' | 'end' | 'inherit';
     textDecoration?: string;
     className?: string;
     children: ReactNode;

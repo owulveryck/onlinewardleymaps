@@ -2,22 +2,10 @@ import Box from '@mui/material/Box';
 import SpeedDial from '@mui/material/SpeedDial';
 import SpeedDialAction from '@mui/material/SpeedDialAction';
 import SpeedDialIcon from '@mui/material/SpeedDialIcon';
-import {makeStyles} from '@mui/styles';
 import * as React from 'react';
 import {MapTheme} from '../../constants/mapstyles';
 import ComponentSymbol from '../symbols/ComponentSymbol';
 import {ComponentIcon} from '../symbols/icons';
-
-const useStyles = makeStyles(() => ({
-    smallerSpeedDial: {
-        '& .MuiSpeedDial-fab': {
-            width: '32px',
-            height: '32px',
-            minHeight: '32px',
-            minWidth: '32px',
-        },
-    },
-}));
 
 interface QuickAddCursor {
     cursor: React.ReactElement;
@@ -35,7 +23,6 @@ interface Action {
 }
 
 export default function CanvasSpeedDial(props: CanvasSpeedDialProps) {
-    const classes = useStyles();
     const {setQuickAdd} = props;
 
     const actionMapTheme = props.mapStyleDefs;
@@ -63,8 +50,17 @@ export default function CanvasSpeedDial(props: CanvasSpeedDialProps) {
             <Box sx={{transform: 'translateZ(0px)', flexGrow: 1}}>
                 <SpeedDial
                     ariaLabel="SpeedDial basic example"
-                    className={classes.smallerSpeedDial}
-                    sx={{position: 'absolute', top: -10, right: 60}}
+                    sx={{
+                        position: 'absolute',
+                        top: -10,
+                        right: 60,
+                        '& .MuiSpeedDial-fab': {
+                            width: '32px',
+                            height: '32px',
+                            minHeight: '32px',
+                            minWidth: '32px',
+                        },
+                    }}
                     icon={<SpeedDialIcon />}
                     direction="left">
                     {actions.map(action => (

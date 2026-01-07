@@ -13,7 +13,7 @@ export interface ComponentTextSymbolProps {
     evolved?: boolean;
     onClick?: (e: React.MouseEvent<SVGTextElement, MouseEvent>) => void;
     note?: string;
-    textAnchor?: string;
+    textAnchor?: 'start' | 'middle' | 'end' | 'inherit';
     setShowTextField?: (value: React.SetStateAction<boolean>) => void;
     opacity?: number; // Opacity based on hop distance from anchor
     hopDistanceColor?: string; // Color based on hop distance from anchor
