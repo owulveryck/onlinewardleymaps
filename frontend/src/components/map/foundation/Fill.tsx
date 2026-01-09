@@ -4,4 +4,5 @@ export interface DefaultThemes {
     plain: string;
     handwritten: string;
     dark: string;
+    octo: string;
 }

@@ -8,6 +8,7 @@ const fill: DefaultThemes = {
     plain: 'none',
     handwritten: 'none',
     dark: '#353347',
+    octo: 'white',
 };
 
 export interface MapBackgroundProps {

@@ -378,6 +378,9 @@ const MapEnvironment: FunctionComponent<MapEnvironmentProps> = ({
             case 'handwritten':
                 mapActions.setMapStyleDefs(MapStyles.Handwritten);
                 break;
+            case 'octo':
+                mapActions.setMapStyleDefs(MapStyles.Octo);
+                break;
             default:
                 mapActions.setMapStyleDefs(MapStyles.Plain);
         }

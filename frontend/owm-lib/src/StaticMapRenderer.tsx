@@ -1,6 +1,6 @@
 import React from 'react';
 import {UnifiedWardleyMap} from '../../src/types/unified/map';
-import {MapTheme, Plain, Wardley, Colour, Dark, Handwritten} from '../../src/constants/mapstyles';
+import {MapTheme, Plain, Wardley, Colour, Dark, Handwritten, Octo} from '../../src/constants/mapstyles';
 import {MapDimensions, EvolutionStages, EvoOffsets} from '../../src/constants/defaults';
 import {MapElements} from '../../src/processing/MapElements';
 import StaticMapContent from './StaticMapContent';
@@ -12,7 +12,7 @@ export interface StaticMapRendererProps {
     wardleyMap: UnifiedWardleyMap;
     width?: number;
     height?: number;
-    theme?: 'wardley' | 'plain' | 'colour' | 'dark' | 'handwritten';
+    theme?: 'wardley' | 'plain' | 'colour' | 'dark' | 'handwritten' | 'octo';
 }
 
 const themeMap: Record<string, MapTheme> = {
@@ -21,6 +21,7 @@ const themeMap: Record<string, MapTheme> = {
     colour: Colour,
     dark: Dark,
     handwritten: Handwritten,
+    octo: Octo,
 };
 
 export const StaticMapRenderer: React.FC<StaticMapRendererProps> = ({
@@ -59,7 +60,7 @@ export const StaticMapRenderer: React.FC<StaticMapRendererProps> = ({
             ? 'url(#wardleyGradient)'
             : mapStyleDefs.className === 'dark'
               ? '#353347'
-              : 'white';
+              : mapStyleDefs.containerBackground || 'white';
 
     return (
         <svg

@@ -13,7 +13,7 @@ export interface OWMConfig {
     /** CSS selector for elements to render. Default: 'pre.owm' */
     selector?: string;
     /** Map theme. Default: 'wardley' */
-    theme?: 'wardley' | 'plain' | 'colour' | 'dark' | 'handwritten';
+    theme?: 'wardley' | 'plain' | 'colour' | 'dark' | 'handwritten' | 'octo';
     /** Map viewBox width. Default: 1280 (16:9) */
     width?: number;
     /** Map viewBox height. Default: 720 (16:9) */
