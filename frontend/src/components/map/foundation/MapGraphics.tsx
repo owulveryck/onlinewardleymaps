@@ -39,9 +39,8 @@ const MapGraphics: React.FunctionComponent<MapGraphicsProps> = ({mapStyleDefs}) 
         </linearGradient>
         <linearGradient gradientUnits="objectBoundingBox" id="octoGradient" spreadMethod="pad" x1="0%" x2="100%" y1="0%" y2="0%">
             <stop offset="0%" style={{stopColor: '#E7E9EE', stopOpacity: 1}} />
-            <stop offset="0.25" style={{stopColor: 'white', stopOpacity: 1}} />
-            <stop offset="0.5" style={{stopColor: '#EBFAFB', stopOpacity: 1}} />
-            <stop offset="0.75" style={{stopColor: 'white', stopOpacity: 1}} />
+            <stop offset="0.3" style={{stopColor: 'white', stopOpacity: 1}} />
+            <stop offset="0.7" style={{stopColor: 'white', stopOpacity: 1}} />
             <stop offset="100%" style={{stopColor: '#E7E9EE', stopOpacity: 1}} />
         </linearGradient>
         <linearGradient spreadMethod="pad" id="accelGradient" x1="0%" y1="64%" x2="76%" y2="0%">
