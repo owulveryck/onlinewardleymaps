@@ -41,6 +41,7 @@ export const MapView: React.FunctionComponent<ModernMapViewProps> = props => {
         plain: 'none',
         handwritten: 'none',
         dark: '#353347',
+        octo: 'white',
     };
 
     const containerStyle: React.CSSProperties = {
