@@ -2,6 +2,7 @@ import React from 'react';
 import {UnifiedWardleyMap} from '../../src/types/unified/map';
 import {MapTheme, Plain, Wardley, Colour, Dark, Handwritten, Octo} from '../../src/constants/mapstyles';
 import {MapDimensions, EvolutionStages, EvoOffsets} from '../../src/constants/defaults';
+import {MapEvolution} from '../../src/types/base';
 import {MapElements} from '../../src/processing/MapElements';
 import StaticMapContent from './StaticMapContent';
 import StaticMapGraphics from './StaticMapGraphics';
@@ -24,6 +25,24 @@ const themeMap: Record<string, MapTheme> = {
     octo: Octo,
 };
 
+function buildEvolutionStages(evolution?: MapEvolution): EvolutionStages {
+    if (evolution && evolution.length === 4) {
+        return {
+            genesis: {l1: evolution[0].line1, l2: evolution[0].line2},
+            custom: {l1: evolution[1].line1, l2: evolution[1].line2},
+            product: {l1: evolution[2].line1, l2: evolution[2].line2},
+            commodity: {l1: evolution[3].line1, l2: evolution[3].line2},
+        };
+    }
+    // Default fallback
+    return {
+        genesis: {l1: 'Genesis', l2: ''},
+        custom: {l1: 'Custom-Built', l2: ''},
+        product: {l1: 'Product', l2: '(+rental)'},
+        commodity: {l1: 'Commodity', l2: '(+utility)'},
+    };
+}
+
 export const StaticMapRenderer: React.FC<StaticMapRendererProps> = ({
     wardleyMap,
     width = 500,
@@ -36,12 +55,7 @@ export const StaticMapRenderer: React.FC<StaticMapRendererProps> = ({
 
     const mapDimensions: MapDimensions = {width, height};
 
-    const evolutionStages: EvolutionStages = {
-        genesis: {l1: 'Genesis', l2: ''},
-        custom: {l1: 'Custom Built', l2: ''},
-        product: {l1: 'Product', l2: '(+rental)'},
-        commodity: {l1: 'Commodity', l2: '(+utility)'},
-    };
+    const evolutionStages = buildEvolutionStages(wardleyMap.evolution);
 
     const evolutionOffsets = EvoOffsets;
 
