@@ -60,7 +60,9 @@ export const StaticMapRenderer: React.FC<StaticMapRendererProps> = ({
             ? 'url(#wardleyGradient)'
             : mapStyleDefs.className === 'dark'
               ? '#353347'
-              : mapStyleDefs.containerBackground || 'white';
+              : mapStyleDefs.className === 'octo'
+                ? 'url(#octoGradient)'
+                : mapStyleDefs.containerBackground || 'white';
 
     return (
         <svg

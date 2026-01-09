@@ -8,7 +8,7 @@ const fill: DefaultThemes = {
     plain: 'none',
     handwritten: 'none',
     dark: '#353347',
-    octo: 'white',
+    octo: 'url(#octoGradient)',
 };
 
 export interface MapBackgroundProps {

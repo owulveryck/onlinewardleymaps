@@ -22,6 +22,22 @@ const StaticMapGraphics: React.FC<StaticMapGraphicsProps> = ({mapStyleDefs}) => 
             <stop offset={1} style={{stopColor: 'rgb(196, 196, 196)'}} />
         </linearGradient>
 
+        {/* Gradient for octo style background - very subtle */}
+        <linearGradient
+            gradientUnits="objectBoundingBox"
+            id="octoGradient"
+            spreadMethod="pad"
+            x1="0%"
+            x2="100%"
+            y1="0%"
+            y2="0%">
+            <stop offset="0%" style={{stopColor: '#E7E9EE', stopOpacity: 1}} />
+            <stop offset="0.25" style={{stopColor: 'white', stopOpacity: 1}} />
+            <stop offset="0.5" style={{stopColor: '#EBFAFB', stopOpacity: 1}} />
+            <stop offset="0.75" style={{stopColor: 'white', stopOpacity: 1}} />
+            <stop offset="100%" style={{stopColor: '#E7E9EE', stopOpacity: 1}} />
+        </linearGradient>
+
         {/* Arrow gradient */}
         <linearGradient id="arrowGradient" x1="0%" y1="0%" x2="100%" y2="0%">
             <stop offset="0%" style={{stopColor: '#ffffff', stopOpacity: 1}} />
