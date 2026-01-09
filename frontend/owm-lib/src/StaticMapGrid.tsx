@@ -41,14 +41,14 @@ const StaticMapGrid: React.FC<StaticMapGridProps> = ({mapDimensions, mapStyleDef
             {/* Arrow on left */}
             <polygon points={`25,${yAxisTop + 5} 30,${yAxisTop - 5} 35,${yAxisTop + 5}`} fill={strokeColor} />
 
-            {/* Invisible text */}
+            {/* Visible text */}
             <text x={35} y={yAxisTop + 15} fontSize="10px" fill={textColor}>
-                Invisible
+                Visible
             </text>
 
-            {/* Visible text */}
+            {/* Invisible text */}
             <text x={35} y={yAxisBottom - 5} fontSize="10px" fill={textColor}>
-                Visible
+                Invisible
             </text>
 
             {/* X-axis (Evolution) */}
